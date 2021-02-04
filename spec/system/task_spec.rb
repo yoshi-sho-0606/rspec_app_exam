@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Task', type: :system do
+
   let(:project) { create(:project) }
   let(:task) { create(:task) }
-  describe 'Task一覧' do
 
+  describe 'Task一覧' do
     context '正常系' do
       it '一覧ページにアクセスした場合、Taskが表示されること' do
         # TODO: ローカル変数ではなく let を使用してください
@@ -76,9 +77,10 @@ RSpec.describe 'Task', type: :system do
         expect(current_path).to eq project_task_path(project, task)
       end
 
+      let!(:done_task) {create(:task, :done)}
+
       it '既にステータスが完了のタスクのステータスを変更した場合、Taskの完了日が更新されないこと' do
         # TODO: FactoryBotのtraitを利用してください
-        done_task = create(:task, :done)
         visit edit_project_task_path(project, done_task)
         select 'todo', from: 'Status'
         click_button 'Update Task'
